@@ -5,15 +5,17 @@
 <SCRIPT language=javascript>
 function redirectOnUserAgent() {
 var mapping = {
-// scheme : market://details?id=<package_name>
-'android': 'market://details?id=com.mooddy.app',
 
-//scheme : itms-apps://itunes.apple.com/app/id<numeric_app_id>
-'iphone': 'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
+  //"_default" : 'https://mooddy-app.com/download.php',
+  // scheme : market://details?id=<package_name>
+  'android' : 'market://details?id=com.mooddy.app',
 
-// if availables :
-'ipad': 'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
-'ipod':'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
+  //scheme : itms-apps://itunes.apple.com/app/id<numeric_app_id>
+  'iphone' : 'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
+
+  // if availables :
+  'ipad' : 'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
+  'ipod' :'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
 }
 
 var userAgent = navigator.userAgent.toLowerCase();
@@ -21,11 +23,11 @@ for (var dev in mapping) {
 if (userAgent.search(dev) != -1) {
     window.location = mapping[dev];
     return;
-}
+  }
 }
 
- else #redirect to another page, or nothing
- window.location = 'https://www.final-fantasy.ch';
+ //else #redirect to another page, or nothing
+ //window.location = mapping["_default"];
 }
 </SCRIPT>
 
@@ -81,8 +83,8 @@ if (userAgent.search(dev) != -1) {
 			<p class="responsive credit">&copy; 2019 Mooddy SAS</p>
 			<div class="responsive contact">
 				<a href="mailto:contact@mooddy-app.com?subject=Hello">Contact</a>
-				<a href="cgu.html">CGU</a>
-				<a href="politique-de-confidentialite.html">Politique de Confidentialit&eacute;</a>
+				<a href="cgu.php">CGU</a>
+				<a href="politique-de-confidentialite.php">Politique de Confidentialit&eacute;</a>
 			</div>
 		</footer>
 		<!--
