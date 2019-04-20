@@ -2,6 +2,35 @@
 <!--
 	Copyright 2018-present Mooddy SAS. All Rights Reserved.
 -->
+<SCRIPT language=javascript>
+function redirectOnUserAgent() {
+var mapping = {
+
+  //"_default" : 'https://mooddy-app.com/download.html',
+  // scheme : market://details?id=<package_name>
+  'android' : 'market://details?id=com.mooddy.app',
+
+  //scheme : itms-apps://itunes.apple.com/app/id<numeric_app_id>
+  'iphone' : 'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
+
+  // if availables :
+  'ipad' : 'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
+  'ipod' :'itms-apps://itunes.apple.com/fr/app/mooddy/id1105748988',
+}
+
+var userAgent = navigator.userAgent.toLowerCase();
+for (var dev in mapping) {
+if (userAgent.search(dev) != -1) {
+    window.location = mapping[dev];
+    return;
+  }
+}
+
+ //else #redirect to another page, or nothing
+ //window.location = mapping["_default"];
+}
+</SCRIPT>
+
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
@@ -14,7 +43,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	</head>
-	<body>
+	<body onload="redirectOnUserAgent();">
 		<header class="container">
 			<!--
 			<div style="border-radius: 5px; margin-bottom: 5%; padding: 10px; text-align: center; color: #2a2f4f; background-color: yellow">
@@ -31,6 +60,8 @@
 				<div class="intro">
 					<h2>Découvrez la musique de ceux qui vous entourent</h2>
 				</div>
+
+
 				<a class="fa fa-apple primary-btn app-store-btn" href="https://itunes.apple.com/fr/app/mooddy/id1105748988">Apple Store</a>
 				<a class="fa fa-android primary-btn play-store-btn" href="https://play.google.com/store/apps/details?id=com.mooddy.app">Play Store</a>
 
@@ -52,8 +83,8 @@
 			<p class="responsive credit">&copy; 2019 Mooddy SAS</p>
 			<div class="responsive contact">
 				<a href="mailto:contact@mooddy-app.com?subject=Hello">Contact</a>
-				<a href="cgu.html">CGU</a>
-				<a href="politique-de-confidentialite.html">Politique de Confidentialit&eacute;</a>
+				<a href="cgu.php">CGU</a>
+				<a href="politique-de-confidentialite.php">Politique de Confidentialit&eacute;</a>
 			</div>
 		</footer>
 		<!--
