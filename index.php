@@ -26,7 +26,7 @@
 		<div class="main-container">
 			<div class="responsive intro-container">
 				<div class="intro">
-					<h2>Partage la musique que tu écoutes</h2>
+					<h2>Viens écouter la musique de ceux qui t'entourent</h2>
 				</div>
 
 				<div class="download-buttons">
@@ -39,20 +39,20 @@
 				</div>
 			</div>
 			<div class="nav-screenshots">
-				<a href="index.html">
+				<a href="spread.html">
 					<img src="img/arrow-left.png" alt="Précédent">
 				</a>
 				<div class="nav-steps-view">
-					<img src="img/app-screenshot-share.png" alt="App screenshot">
+					<img src="img/app-screenshot-index.png" alt="App screenshot">
 					<div class="nav-steps-container">
-						<div class="nav-step"></div>
 						<div class="nav-step active"></div>
+						<div class="nav-step"></div>
 						<div class="nav-step"></div>
 						<div class="nav-step"></div>
 						<div class="nav-step"></div>
 					</div>
 				</div>
-				<a href="discover.html">
+				<a href="share.html">
 					<img src="img/arrow-right.png" alt="Suivant">
 				</a>
 			</div>
