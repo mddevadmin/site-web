@@ -1,0 +1,132 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Creates a website with a custom DNS name, hosted on S3 bucket and served via Amazone CloudFront
+Parameters:
+  AcmCertificateArn:
+    Type: String
+    Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
+    Default: arn:aws:acm:us-east-1:067802847314:certificate/796bec0a-2fe9-4a85-9c55-49a7a614cf24
+  DefaultTTL:
+    Type: Number
+    Description: "TTL in seconds"
+    Default: 30
+  MinimumTTL:
+    Description: "Minimum cache lifetime in seconds for the CloudFront distribution"
+    Default: 5
+    Type: Number
+  StaticHosting:
+    Type: String
+  Domain:
+    Type: String
+
+Resources:
+  myOriginAccess:
+    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Sub "${AWS::StackName}-originAccess"
+
+  StaticWebsiteHosting:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName:
+        Fn::Join:
+        - "-"
+        - - !Ref StaticHosting
+          - artifact
+
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref StaticWebsiteHosting
+      PolicyDocument:
+        Statement:
+        -
+          Action:
+            - "s3:GetObject"
+          Effect: "Allow"
+          Resource:
+            Fn::Join:
+              - ""
+              - - Fn::GetAtt:
+                  - StaticWebsiteHosting
+                  - Arn
+                - "/*"
+          Principal:
+            AWS :
+              Fn::Join:
+              - ''
+              - - 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity '
+                - !Ref myOriginAccess
+
+  WebsiteCloudfront:
+    Type: AWS::CloudFront::Distribution
+    DependsOn:
+    - StaticWebsiteHosting
+    Properties:
+      DistributionConfig:
+        Comment: Cloudfront Distribution pointing to S3 bucket
+        Origins:
+        - DomainName:
+            Fn::Join:
+              - '.'
+              - - !Ref StaticWebsiteHosting
+                - s3.amazonaws.com
+          Id: myOrigin
+          S3OriginConfig:
+            OriginAccessIdentity:
+              Fn::Join:
+              - ''
+              - - origin-access-identity/cloudfront/
+                - !Ref myOriginAccess
+        Enabled: true
+        DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponsePagePath: /index.html
+            ResponseCode: '200'
+            ErrorCachingMinTTL: 300
+          - ErrorCode: 404
+            ResponsePagePath: /index.html
+            ResponseCode: '200'
+            ErrorCachingMinTTL: 300
+        Aliases:
+        - !Sub "${Domain}.mooddy.net"
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - GET
+          - HEAD
+          Compress: true
+          DefaultTTL: !Ref DefaultTTL
+          MinTTL: !Ref MinimumTTL
+          TargetOriginId: myOrigin
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+        ViewerCertificate:
+          AcmCertificateArn: !Ref AcmCertificateArn
+          SslSupportMethod: sni-only
+
+  WebsiteDNSName:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: ZYTKVSSALM0EO
+      RecordSets:
+      - Name: !Sub "${Domain}.mooddy.net"
+        Type: A
+        AliasTarget:
+          HostedZoneId: Z2FDTNDATAQYW2
+          DNSName: !GetAtt WebsiteCloudfront.DomainName
+
+Outputs:
+  BucketName:
+    Value: !Ref StaticWebsiteHosting
+    Description: Name of S3 bucket to hold website content
+  CloudfrontEndpoint:
+    Value: !GetAtt [WebsiteCloudfront, DomainName]
+    Description: Endpoint for Cloudfront distribution
+  OriginAccessCloudFront:
+    Description: OriginAccess needed to secure communication between S3 Bucket and CloudFront distribution
+    Value: !Ref myOriginAccess
