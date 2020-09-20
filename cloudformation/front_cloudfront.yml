@@ -4,7 +4,7 @@ Parameters:
   AcmCertificateArn:
     Type: String
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
-    Default: arn:aws:acm:us-east-1:067802847314:certificate/796bec0a-2fe9-4a85-9c55-49a7a614cf24
+    Default: arn:aws:acm:us-east-1:067802847314:certificate/9c33e889-7713-4337-8b35-0fc2123ee469
   DefaultTTL:
     Type: Number
     Description: "TTL in seconds"
@@ -91,7 +91,7 @@ Resources:
             ResponseCode: '200'
             ErrorCachingMinTTL: 300
         Aliases:
-        - !Sub "${Domain}.mooddy.net"
+        - !Sub "${Domain}.mooddy-app.com"
         DefaultCacheBehavior:
           AllowedMethods:
           - GET
@@ -112,9 +112,10 @@ Resources:
   WebsiteDNSName:
     Type: AWS::Route53::RecordSetGroup
     Properties:
-      HostedZoneId: ZYTKVSSALM0EO
+
+      HostedZoneId: Z2Z5X0F564GM0Y
       RecordSets:
-      - Name: !Sub "${Domain}.mooddy.net"
+      - Name: !Sub "${Domain}.mooddy-app.com"
         Type: A
         AliasTarget:
           HostedZoneId: Z2FDTNDATAQYW2
@@ -130,3 +131,4 @@ Outputs:
   OriginAccessCloudFront:
     Description: OriginAccess needed to secure communication between S3 Bucket and CloudFront distribution
     Value: !Ref myOriginAccess
+

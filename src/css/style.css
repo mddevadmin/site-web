@@ -28,15 +28,13 @@ html {
 
 body {
 	overflow-x: hidden;
-	width: 100%;
+	max-width: 100%;
 	min-width: 300px;
-	height: 100%;
 	min-height: 100%;
 	margin: 0;
-	margin-top: 5%;
-	padding: 0;
+	padding: 40px;
 	color: #fff;
-	background: linear-gradient(to bottom, #2a2f4f 0%, #121524 70%);
+	background: linear-gradient(to bottom, #9F4FFC 0%, #593BFF 70%);
 	font-family: 'Lato', Helvetica, sans-serif;
 	font-size: 100%;
 	font-weight: 400;
@@ -63,6 +61,53 @@ p {
 
 .responsive {
 	width: 100%;
+}
+
+.main-container {
+	padding: 0px 35px;
+}
+
+.nav-screenshots {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow-y: hidden;
+}
+
+.nav-screenshots > a > img {
+	width: 50px;
+}
+
+.nav-steps-view {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+}
+
+.nav-steps-container {
+ 	display: flex;
+ 	align-items: center;
+}
+
+.nav-steps-container .nav-step {
+	height: 3px;
+	width: 20%;
+	background-color: white;
+	opacity: 0.3;
+}
+
+.nav-steps-container .nav-step:first-child {
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+.nav-steps-container .nav-step:last-child {
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+
+.nav-steps-container .nav-step.active {
+	opacity: 1;
 }
 
 @media only screen and (min-width: 767px) {
@@ -155,27 +200,23 @@ p {
 	}
 }
 
-.app-store-btn::before {
-	padding-right: 8px;
-	content: '';
-	font-size: 16px;
+.header-app {
+	display: flex;
+	align-items: center;
 }
 
-.play-store-btn::before {
-	padding-right: 8px;
-	content: '';
-	font-size: 16px;
-}
-
-.download-btn::before {
-	padding-right: 8px;
-	content: '';
-	font-size: 16px;
+.header-app span {
+	font-size: 11px;
+    font-weight: bold;
 }
 
 .app-icon {
-	width: 200px;
-	margin: 0 auto;
+	display: flex;
+    align-items: center;
+	width: 100px;
+	padding-right: 10px;
+	margin-right: 10px;
+	border-right: 1px solid white;
 	filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
 	-webkit-filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
 }
@@ -186,16 +227,6 @@ p {
 	white-space: nowrap;
 	color: deeppink;
 	text-align: center;
-}
-
-@media only screen and (min-width: 767px) {
-	.app-icon {
-		margin: 0;
-	}
-
-	.app-icon p {
-		margin-left: 2px;
-	}
 }
 
 .intro {
@@ -252,6 +283,7 @@ p {
 .intro h2 {
 	/*margin-top: 150px;*/
 	margin-bottom: 15px;
+	text-transform: uppercase;
 	font-size: 20px;
 	font-weight: 200;
 	line-height: 1.2;
@@ -313,12 +345,11 @@ p {
 }
 
 .footer {
-	margin-bottom: 10px;
+	margin: 40px 0px;
 }
 
 .footer p {
-	opacity: 0.7;
-	font-size: 14px;
+	font-size: 11px;
 }
 
 .credit {
@@ -335,11 +366,12 @@ p {
 
 .contact {
 	float: left;
+	margin-bottom: 40px;
 }
 
 .contact a {
 	padding-right: 20px;
-	font-size: 14px;
+	font-size: 11px;
 }
 
 .contact a,
@@ -366,4 +398,18 @@ p {
 		padding-right: 0;
 		padding-left: 12px;
 	}
+}
+
+.download-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.download-buttons a {
+	padding: 0px 20px;
+}
+
+.download-buttons a img {
+	width: 130px;
 }
